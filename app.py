@@ -9,8 +9,10 @@ app = Flask(__name__)
 def index():
     qr_img_data = None
     data = None
+    qr_name = None
     if request.method == 'POST':
         data = request.form.get('data')
+        qr_name = request.form.get('qr_name')
         if data:
             qr = qrcode.QRCode(version=1, box_size=10, border=5)
             qr.add_data(data)
@@ -20,7 +22,23 @@ def index():
             img.save(img_io, 'PNG')
             img_io.seek(0)
             qr_img_data = base64.b64encode(img_io.getvalue()).decode('utf-8')
-    return render_template('index.html', qr_img_data=qr_img_data, data=data)
+    return render_template('index.html', qr_img_data=qr_img_data, data=data, qr_name=qr_name)
+
+@app.route('/download')
+def download():
+    data = request.args.get('data')
+    qr_name = request.args.get('qr_name')
+    if data:
+        qr = qrcode.QRCode(version=1, box_size=10, border=5)
+        qr.add_data(data)
+        qr.make(fit=True)
+        img = qr.make_image(fill='black', back_color='white')
+        img_io = io.BytesIO()
+        img.save(img_io, 'PNG')
+        img_io.seek(0)
+        filename = f"{qr_name}.png" if qr_name else "qr_code.png"
+        return send_file(img_io, mimetype='image/png', as_attachment=True, download_name=filename)
+    return redirect(url_for('index'))
 
 @app.route('/download')
 def download():
