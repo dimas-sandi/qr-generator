@@ -17,6 +17,9 @@
         <div class="qr-code">
             <h2>Generated QR Code:</h2>
             <img src="data:image/png;base64,{{ qr_img_data }}" alt="QR Code">
+            {% if data %}
+            <a href="{{ url_for('download', data=data) }}" class="button" download>Download QR Code</a>
+            {% endif %}
         </div>
         {% endif %}
     </div>
