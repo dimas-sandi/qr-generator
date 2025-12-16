@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import QRCode from 'qrcode.react';
+import { QRCodeCanvas } from 'qrcode.react';
 import { motion } from 'framer-motion';
 
 const QrGenerator: React.FC = () => {
@@ -37,27 +37,27 @@ const QrGenerator: React.FC = () => {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="bg-white p-8 rounded-lg shadow-xl max-w-md w-full text-center"
+      className="bg-brand-light/90 backdrop-blur-sm p-8 rounded-2xl shadow-2xl max-w-md w-full text-center"
     >
-      <h1 className="text-3xl font-bold text-gray-800 mb-6">QR Code Generator</h1>
+      <h1 className="text-3xl font-bold text-brand-primary mb-6">QR Code Generator</h1>
 
       <div className="space-y-4 mb-6">
         <input
           type="text"
-          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full p-3 bg-white/50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-accent transition-all duration-300"
           placeholder="Enter QR Code Name (optional)"
           value={qrName}
           onChange={(e) => setQrName(e.target.value)}
         />
         <input
           type="text"
-          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full p-3 bg-white/50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-accent transition-all duration-300"
           placeholder="Paste link or data here"
           value={data}
           onChange={(e) => setData(e.target.value)}
         />
         <button
-          className="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 transition duration-300 font-semibold"
+          className="w-full bg-brand-secondary text-white py-3 rounded-lg hover:bg-brand-accent transition-all duration-300 font-semibold transform hover:scale-105"
           onClick={handleGenerate}
         >
           Generate QR Code
@@ -69,17 +69,17 @@ const QrGenerator: React.FC = () => {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-8 p-4 bg-gray-50 rounded-lg border border-gray-200 flex flex-col items-center"
+          className="mt-8 p-6 bg-white/80 rounded-xl border border-gray-200 flex flex-col items-center"
         >
-          <h2 className="text-xl font-semibold text-gray-700 mb-4">Your QR Code:</h2>
-          <div ref={qrCodeRef} className="p-2 bg-white border border-gray-300 rounded-md">
-            <QRCode value={data} size={256} level="H" includeMargin={false} />
+          <h2 className="text-xl font-semibold text-brand-primary mb-4">Your QR Code:</h2>
+          <div ref={qrCodeRef} className="p-3 bg-white border-2 border-brand-accent rounded-lg shadow-inner">
+            <QRCodeCanvas value={data} size={256} level="H" includeMargin={false} />
           </div>
           <button
-            className="mt-6 bg-green-600 text-white py-2 px-6 rounded-md hover:bg-green-700 transition duration-300 font-semibold"
+            className="mt-6 bg-brand-accent text-white py-2 px-8 rounded-lg hover:bg-brand-secondary transition-all duration-300 font-semibold transform hover:scale-105"
             onClick={handleDownload}
           >
-            Download QR Code
+            Download
           </button>
         </motion.div>
       )}

@@ -5,7 +5,7 @@ import './App.css'; // This will contain global styles or specific app styles
 
 const App: React.FC = () => {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 p-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-brand-primary to-brand-secondary p-4 font-poppins">
       <QrGenerator />
       <Footer />
     </div>
